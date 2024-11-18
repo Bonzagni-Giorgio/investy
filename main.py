@@ -1,30 +1,54 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.keys import Keys
+import time
+from selenium import webdriver
+import chromedriver_autoinstaller
 
-import requests
-from bs4 import BeautifulSoup
+# service = Service("chromedriver")  # Cambia "chromedriver" con il percorso completo se necessario
+# driver = webdriver.Chrome(service=service)
 
-# URL 
-url = "https://finance.yahoo.com/markets/stocks/most-active/"  # Sostituisci con il sito desiderato
+options = webdriver.ChromeOptions()
 
-headers = {
-    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
-}
 
-# richiesta GET al sito
-response = requests.get(url, headers=headers)
 
-# Verifica la richiesta 
-if response.status_code == 200:
+# Create a webdriver instance
+chromedriver_autoinstaller.install()
+driver = webdriver.Chrome(options=options)
+
+# URL target (azioni più attive su Yahoo Finance)
+url = "https://finance.yahoo.com/most-active"
+
+try:
+    # Apri il browser
+    driver.get(url)
+
+    # Attendi 5 secondi per caricare la pagina
+    time.sleep(5)
+
+
+# prova
+
+    #banner
+    xpathAccetta = "/html/body/div/div/div/div/form/div[2]/div[2]/button[1]"
     
-    soup = BeautifulSoup(response.text, 'html.parser')
-    print(soup.prettify())
+    button_accetta = driver.find_element(By.XPATH, xpathAccetta)
+    button_accetta.click()
+    
+    time.sleep(5)
+    
 
-    titles = soup.find_all('h1')  # Cambia 'h1' con altri tag se necessario
-    paragraphs = soup.find_all('p')
+    
+    
+    #titolo
+    xpath = "//*[@id='nimbus-app']/section/section/section/article/section[1]/header/h2"
+    
+    title_element = driver.find_element(By.XPATH, xpath)
+    title = title_element.text
 
-    # Stampa 
-    print("Titoli trovati:")
-    for title in titles:
-        print(f"- {title.text.strip()}")
+    print("il titolo é" + title)
 
-else:
-    print(f"Errore durante la richiesta: {response.status_code}")
+finally:
+    # Chiudi il browser
+    driver.quit()
