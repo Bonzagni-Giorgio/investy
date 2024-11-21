@@ -18,7 +18,7 @@ chromedriver_autoinstaller.install()
 driver = webdriver.Chrome(options=options)
 
 # URL target (azioni più attive su Yahoo Finance)
-url = "https://finance.yahoo.com/most-active"
+url = "https://previsionieuro.com/tesla#google_vignette"
 
 try:
     # Apri il browser
@@ -27,28 +27,37 @@ try:
     # Attendi 5 secondi per caricare la pagina
     time.sleep(5)
 
-
-# prova
+# per poter cliccare i banner 
 
     #banner
-    xpathAccetta = "/html/body/div/div/div/div/form/div[2]/div[2]/button[1]"
+    xpathAccetta = "/html/body/div[2]/div[2]/div[2]/div[2]/div[2]/button[1]/p"
     
     button_accetta = driver.find_element(By.XPATH, xpathAccetta)
     button_accetta.click()
     
     time.sleep(5)
-    
 
-    
-    
-    #titolo
-    xpath = "//*[@id='nimbus-app']/section/section/section/article/section[1]/header/h2"
-    
-    title_element = driver.find_element(By.XPATH, xpath)
-    title = title_element.text
+  #primo elemento
+    xpath = "/html/body/div[1]/div/div/main/article/div/div[1]/div[1]/table/tbody/tr[2]/td[5]/strong"
+    first_element = driver.find_element(By.XPATH, xpath)
+    uno = first_element.text
 
-    print("il titolo é" + title)
+    print("il primo elemento é " + uno)
 
 finally:
     # Chiudi il browser
     driver.quit()
+
+
+
+
+
+
+
+
+    
+
+    
+    
+  
+
